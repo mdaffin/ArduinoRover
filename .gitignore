@@ -1,0 +1,6 @@
+build/
+*.tmp
+*~
+*.swp
+.kdev4/
+*.kdev4
