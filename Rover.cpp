@@ -1,10 +1,10 @@
 #ifndef NOT_RANGE_FINDER
-#include "libraries/SRF05/SRF05.h"
+#include <SRF05.h>
 #endif
 #include <Servo.h>
-#include "libraries/Wheel/Wheel.h"
-#include "libraries/AI/AI.h"
-#include "libraries/Bounce/Bounce.h"
+#include <Wheel.h>
+#include <AI.h>
+#include <Bounce.h>
 
 /* Digital Pins*/
 const int green_pin = 2;
