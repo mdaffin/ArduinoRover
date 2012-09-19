@@ -53,16 +53,18 @@ void AI::init()
 void AI::advance()
 {
     unsigned long current_time = millis();
+    _stage_time -= (current_time - _last_time);
     if (_stage_time <= 0) {
         if (_mode == AI::Wonder) {
             advance_wander();
         } else if (_mode == AI::Backup) {
             advance_backup();
-        }
+        } else {
+	  stop();
+	}
         _stage++;
     }
     Wheel::update();
-    _stage_time -= (current_time - _last_time);
     _last_time = current_time;
 }
 
