@@ -9,10 +9,15 @@ public:
     ~SRF05();
     
     int ping();
-    static int ping(int pin);
+
+    boolean triggered();
+    void set_limit(int limit);
+    int limit();
     
 private:
     int _pin;
+    int _trigger_limit;
+    int last_value;
 };
 
 #endif //SRF05_h

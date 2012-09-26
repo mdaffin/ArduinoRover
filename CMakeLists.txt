@@ -4,7 +4,8 @@ cmake_minimum_required(VERSION 2.8)
 
 project(Rover C CXX)
 
-if( CMAKE_BUILD_TYPE MATCHES "[Dd][Ee][Bb][Uu][Gg]" )
+if(CMAKE_BUILD_TYPE MATCHES "[Dd][Ee][Bb][Uu][Gg]")
+	message("Debug mode enabled")
     add_definitions( -DDEBUG )
 endif()
 if (NOT_LDR)
@@ -36,8 +37,5 @@ set(ARDUINO_DEFAULT_PORT /dev/ttyACM0) # Default Port, when not specified
 #====================================================================#
 # Firmware
 #====================================================================#
-generate_arduino_firmware(rover
-    SRCS Rover.cpp
-    #    LIBS blink_lib
-    BOARD uno)
-
+generate_arduino_firmware(rover SRCS Rover.cpp)
+generate_arduino_firmware(calibrate SRCS Wheel-Calibrate.cpp)

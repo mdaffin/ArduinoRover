@@ -9,18 +9,13 @@ SRF05::~SRF05() {}
 
 int SRF05::ping()
 {
-    return ping(_pin);
-}
-
-int SRF05::ping(int pin)
-{
-    pinMode(pin, OUTPUT);
-    digitalWrite(pin, LOW);
+    pinMode(_pin, OUTPUT);
+    digitalWrite(_pin, LOW);
     delayMicroseconds(2);
-    digitalWrite(pin, HIGH);
+    digitalWrite(_pin, HIGH);
     delayMicroseconds(10);
-    digitalWrite(pin, LOW);
+    digitalWrite(_pin, LOW);
     
-    pinMode(pin, INPUT);
-    return pulseIn(pin, HIGH)/58;
+    pinMode(_pin, INPUT);
+    return pulseIn(_pin, HIGH)/58;
 }

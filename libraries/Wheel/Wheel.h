@@ -10,10 +10,10 @@ public:
     static void stop();
     static void update();
     static void forward();
-    static void forward(int value);
+    static void forward(boolean stright);
     static void set_speed(int value);
     static void reverse();
-    static void reverse(int value);
+    static void reverse(boolean stright);
     static void increase_speed(int value);
     static void turn_left(float factor);
     static void turn_right(float factor);

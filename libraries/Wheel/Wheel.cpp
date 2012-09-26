@@ -68,26 +68,30 @@ void Wheel::update()
 
 void Wheel::forward()
 {
-    _reversed = 1;
-    _left_wheel->set_turn_factor(1);
-    _right_wheel->set_turn_factor(1);
+    forward(true);
 }
 
-void Wheel::forward(int value)
+void Wheel::forward(boolean stright)
 {
-    set_speed(value);
-    forward();
+    _reversed = 1;
+    if (stright) {
+        _left_wheel->set_turn_factor(1);
+        _right_wheel->set_turn_factor(1);
+    }
 }
 
 void Wheel::reverse()
 {
-    _reversed = -1;
+    reverse(true);
 }
 
-void Wheel::reverse(int value)
+void Wheel::reverse(boolean stright)
 {
-    set_speed(value);
-    reverse();
+    _reversed = -1;
+    if (stright) {
+        _left_wheel->set_turn_factor(1);
+        _right_wheel->set_turn_factor(1);
+    }
 }
     
 void Wheel::set_speed(int value)

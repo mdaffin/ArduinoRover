@@ -29,8 +29,11 @@ void advance_backup()
     switch (_stage) {
         case 0:
             _stage_time = random(400, 1500);
+            Wheel::forward();
             Wheel::reverse();
+#ifdef DEBUG
             Serial.println("AI::Backing up");
+#endif
             break;
         case 1:
             _stage_time = random(200,2000);
@@ -38,8 +41,10 @@ void advance_backup()
                 Wheel::turn_right(-1);
             else
                 Wheel::turn_left(-1);
-            Serial.println("AI::Turning right");
-            break;
+#ifdef DEBUG
+                Serial.println("AI::Turning right");
+#endif
+                break;
         case 2:
             AI::wonder();
     }
@@ -74,7 +79,9 @@ void AI::bumper_hit(AI::Direction direction)
     _stage = 0;
     _stage_time = 0;
     _data = direction;
+#ifdef DEBUG
     Serial.println("AI::bumper_hit");
+#endif
 }
 
 void AI::edge_detected()
@@ -82,7 +89,9 @@ void AI::edge_detected()
     _mode = AI::Backup;
     _stage = 0;
     _stage_time = 0;
+#ifdef DEBUG
     Serial.println("AI::edge_detected");
+#endif
 }
 
 void AI::wonder()
@@ -90,7 +99,9 @@ void AI::wonder()
     _mode = AI::Wonder;
     _stage = 0;
     _stage_time = 0;
+#ifdef DEBUG
     Serial.println("AI::wonder");
+#endif
 }
 
 void AI::stop()
@@ -99,5 +110,7 @@ void AI::stop()
     _stage = 0;
     _stage_time = 0;
     Wheel::stop();
+#ifdef DEBUG
     Serial.println("AI::Stop");
+#endif
 }
