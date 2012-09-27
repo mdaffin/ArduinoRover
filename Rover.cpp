@@ -54,13 +54,9 @@ int green_state = HIGH;
 void setup()
 {
     // Setup colour leds
-    pinMode(red_pin, OUTPUT);
-    pinMode(yellow_pin, OUTPUT);
-    pinMode(blue_pin, OUTPUT);
+    pinMode(led_pin, OUTPUT);
     // Turn on colour leds to indicate loading started
-    digitalWrite(red_pin, HIGH);
-    digitalWrite(blue_pin, HIGH);
-    digitalWrite(yellow_pin, HIGH);
+    digitalWrite(led_pin, HIGH);
     
     // Setup other pins
     pinMode(bumper_left_pin, INPUT);
@@ -85,8 +81,7 @@ void setup()
     AI::init();
     
     // Turn off red and blue led to indicate setup has finished
-    digitalWrite(red_pin, LOW);
-    digitalWrite(blue_pin, LOW);
+    digitalWrite(led_pin, LOW);
 }
 
 void loop()
