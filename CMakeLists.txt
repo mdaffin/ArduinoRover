@@ -22,8 +22,8 @@ if (NOT_POTENTIOMETER)
 endif()
 
 
-set(ARDUINO_DEFAULT_BOARD uno) # Default Board ID, when not specified
-set(ARDUINO_DEFAULT_PORT /dev/ttyACM0) # Default Port, when not specified
+set(ARDUINO_DEFAULT_BOARD pro5v328) # Default Board ID, when not specified
+set(ARDUINO_DEFAULT_PORT /dev/ttyUSB0) # Default Port, when not specified
 
 #====================================================================#
 # Libraries
@@ -38,4 +38,5 @@ set(ARDUINO_DEFAULT_PORT /dev/ttyACM0) # Default Port, when not specified
 # Firmware
 #====================================================================#
 generate_arduino_firmware(rover SRCS Rover.cpp)
+generate_arduino_firmware(playground SRCS Playground.cpp)
 generate_arduino_firmware(calibrate SRCS Wheel-Calibrate.cpp)

@@ -34,6 +34,11 @@ void Wheel::toggle_running()
     }
 }
 
+boolean Wheel::is_running()
+{
+    return _running;
+}
+
 void Wheel::add_led(int pin)
 {
     _led_pin = pin;

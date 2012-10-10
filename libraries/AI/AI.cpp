@@ -1,5 +1,6 @@
 #include "AI.h"
 #include <Wheel.h>
+#include "../../Debug.h"
 /* Global varibles */
 unsigned int _stage = 0;
 long _stage_time = 0;
@@ -19,7 +20,7 @@ void advance_wander()
         case 0:
             _stage_time = 999999;
             Wheel::forward();
-            Serial.println("AI::Wondering");
+            debug_print("AI::Wondering");
             break;
     }
 }
@@ -32,7 +33,7 @@ void advance_backup()
             Wheel::forward();
             Wheel::reverse();
 #ifdef DEBUG
-            Serial.println("AI::Backing up");
+            debug_print("AI::Backing up");
 #endif
             break;
         case 1:
@@ -42,11 +43,20 @@ void advance_backup()
             else
                 Wheel::turn_left(-1);
 #ifdef DEBUG
-                Serial.println("AI::Turning right");
+                debug_print("AI::Turning right");
 #endif
                 break;
         case 2:
             AI::wonder();
+    }
+}
+
+void advance_spiral()
+{
+    switch(_stage) {
+        case 0:
+            _data = 0;
+            
     }
 }
 
@@ -79,19 +89,16 @@ void AI::bumper_hit(AI::Direction direction)
     _stage = 0;
     _stage_time = 0;
     _data = direction;
-#ifdef DEBUG
-    Serial.println("AI::bumper_hit");
-#endif
+    debug_print("AI::bumper_hit");
 }
 
-void AI::edge_detected()
+void AI::edge_detected(Direction direction)
 {
     _mode = AI::Backup;
     _stage = 0;
     _stage_time = 0;
-#ifdef DEBUG
-    Serial.println("AI::edge_detected");
-#endif
+    _data = direction;
+    debug_print("AI::edge_detected");
 }
 
 void AI::wonder()
@@ -99,9 +106,15 @@ void AI::wonder()
     _mode = AI::Wonder;
     _stage = 0;
     _stage_time = 0;
-#ifdef DEBUG
-    Serial.println("AI::wonder");
-#endif
+    debug_print("AI::wonder");
+}
+
+void AI::spiral()
+{
+    _mode = AI::Spiral;
+    _stage = 0;
+    _stage_time = 0;
+    debug_print("AI::spiral");
 }
 
 void AI::stop()
@@ -110,7 +123,5 @@ void AI::stop()
     _stage = 0;
     _stage_time = 0;
     Wheel::stop();
-#ifdef DEBUG
-    Serial.println("AI::Stop");
-#endif
+    debug_print("AI::Stop");
 }

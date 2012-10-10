@@ -4,13 +4,14 @@
 
 namespace AI {
     enum Direction { Left, Right };
-    enum Mode { Backup, Wonder, Stop };
+    enum Mode { Backup, Wonder, Spiral, Stop };
 
     void init();
     void advance();
     void bumper_hit(Direction direction);
-    void edge_detected();
+    void edge_detected(Direction direction);
     void wonder();
+    void spiral();
     void stop();
     
 };

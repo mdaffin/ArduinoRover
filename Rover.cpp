@@ -2,118 +2,93 @@
 #include <Servo.h>
 #include <Wheel.h>
 #include <AI.h>
-#ifndef NOT_RANGE_FINDER
-#include <SRF05.h>
-#endif
 #include <Bounce.h>
 #include "Pins.h"
+#include "Debug.h"
 
 /* forward declerations */
-void check_switches();
-void check_bumpers();
-void forward();
-void backup();
-void turn_random();
+boolean check_switches();
+boolean check_bumpers();
+boolean check_edges();
 
-void check_switches()
+boolean check_switches()
+{
+    if (button.update()) {
+        if (button.risingEdge()) {
+            Wheel::toggle_running();
+            if (Wheel::is_running())
+                AI::wonder();
+            else
+                AI::stop();
+        }
+    }
+}
+
+boolean check_bumpers()
 {
     bumper_left.update();
     bumper_right.update();
     if (bumper_left.read() == HIGH) {
         AI::bumper_hit(AI::Left);
-        return;
+        return true;
     }
     if (bumper_right.read() == HIGH) {
         AI::bumper_hit(AI::Right);
-        return;
+        return true;
     }
-    if (toggle.update()) {
-        if (toggle.risingEdge()) {
-            Wheel::toggle_running();
-            AI::wonder();
-        }
-    }
-    if (down.update()) {
-        if (down.risingEdge()) {
-            Wheel::forward();
-        }
-    }
-    if (up.update()) {
-        if (up.risingEdge()) {
-            Wheel::reverse();
-        }
-    }
+    return false;
 }
 
-void check_bumpers()
-{    
+boolean check_edges()
+{
+    left_edge.update();
+    right_edge.update();
+    if (left_edge.read() == HIGH) {
+        AI::edge_detected(AI::Left);
+        debug_print("Left edge hit");
+        return true;
+    }
+    if (right_edge.read() == HIGH) {
+        AI::edge_detected(AI::Right);
+        debug_print("Right edge hit");
+        return true;
+    }
+    return false;
 }
-
-int green_state = HIGH;
 
 void setup()
 {
-    // Setup colour leds
-    pinMode(led_pin, OUTPUT);
-    // Turn on colour leds to indicate loading started
-    digitalWrite(led_pin, HIGH);
-    
-    // Setup other pins
-    pinMode(bumper_left_pin, INPUT);
-    pinMode(bumper_right_pin, INPUT);
-    pinMode(toggle_pin, INPUT);
-    pinMode(down_pin, INPUT);
-    pinMode(up_pin, INPUT);
-    
+    Pins::init();
+
     // Setup communication and random numbers
     Serial.begin(9600);
     randomSeed(analogRead(5));
-    
-    // Initlise switches
-    check_switches();
-    
-    // Setup wheels
-    Wheel::add_left_wheel(left_wheel_pin);
-    Wheel::add_right_wheel(right_wheel_pin);
-    Wheel::add_led(wheel_led_pin);
-    
+
     // Setup AI
     AI::init();
-    
+
     // Turn off red and blue led to indicate setup has finished
-    digitalWrite(led_pin, LOW);
+    digitalWrite(Pins::led_pin, LOW);
 }
 
 void loop()
 {
-#ifndef NOT_RANGE_FINDER
-    front_distance = front_rf.ping();
-#ifdef DEBUG
-    Serial.print("Front Distance: ");
-    Serial.println(front_distance);
-#endif
-    
-    if (front_distance > MAX_DISTANCE) {
-        AI::edge_detected();
-    }
-#endif
-
 #ifndef NOT_POTENTIOMETER
-    int speed = analogRead(pot_pin)/2;
+    int speed = analogRead(Pins::pot_pin)/2;
     Wheel::set_speed(speed);
 #endif
-#ifndef NOT_LDR
-#ifdef DEBUG
-    Serial.println(analogRead(ldr_pin));
-#endif
-#endif
-    check_bumpers();
-    check_switches();
+    if (!check_switches()) {
+
+    }
+    if (!check_edges()) {
+
+    }
+    if (!check_bumpers()) {
+
+    }
     AI::advance();
-    
-    green_state = !green_state;
-    digitalWrite(yellow_pin, green_state);
-#ifdef DEBUG // Make it easier to read serial output
-    delay(100);
+
+#ifdef DEBUG
+    delay(100); // Make it easier to read serial output
 #endif
 }

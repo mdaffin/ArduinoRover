@@ -18,6 +18,7 @@ public:
     static void turn_left(float factor);
     static void turn_right(float factor);
     static void toggle_running();
+    static boolean is_running();
     static void add_left_wheel(int pin);
     static void add_right_wheel(int pin);
     static void add_led(int pin);
