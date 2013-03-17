@@ -18,10 +18,3 @@ generate_arduino_firmware(rover-attiny
     PORT /dev/ttyACM0
 )
 
-generate_arduino_firmware(test
-    SRCS Test.cpp
-    BOARD attiny84at8
-    PROGRAMMER arduinoisp
-    PORT /dev/ttyACM0
-)
-
