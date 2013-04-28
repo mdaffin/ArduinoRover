@@ -1,4 +1,4 @@
-set(CMAKE_TOOLCHAIN_FILE submodules/cmake/cmake/ArduinoToolchain.cmake) # Arduino Toolchain
+set(CMAKE_TOOLCHAIN_FILE cmake/cmake/ArduinoToolchain.cmake) # Arduino Toolchain
 
 cmake_minimum_required(VERSION 2.8)
 set(ARDUINO_C_FLAGS      "--std=gnu++11 -ffunction-sections -fdata-sections")
@@ -8,7 +8,7 @@ project(Rover C CXX)
 message(STATUS "ARDUINO_CXX_FLAGS: " ${ARDUINO_CXX_FLAGS})
 
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/libraries)
-register_hardware_platform(${CMAKE_SOURCE_DIR}/submodules/attiny/hardware/tiny)
+register_hardware_platform(${CMAKE_SOURCE_DIR}/hardware/tiny/hardware/tiny)
 
 generate_arduino_firmware(arduinoisp
     SKETCH ${ARDUINO_SDK_PATH}/examples/ArduinoISP

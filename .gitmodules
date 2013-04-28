@@ -1,6 +1,6 @@
-[submodule "submodules/cmake"]
-	path = submodules/cmake
+[submodule "cmake"]
+	path = cmake
 	url = git://github.com/james147/arduino-cmake.git
-[submodule "submodules/attiny"]
-	path = submodules/attiny
+[submodule "hardware/tiny"]
+	path = hardware/tiny
 	url = git://github.com/james147/arduino-tiny.git
