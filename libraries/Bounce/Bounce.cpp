@@ -9,26 +9,30 @@
 #include "Bounce.h"
 
 
-Bounce::Bounce(uint8_t pin,unsigned long interval_millis)
+Bounce::Bounce()
 {
+}
+
+void Bounce::attach(uint8_t pin,unsigned long interval_millis)
+{
+    pinMode(pin, INPUT);
 	interval(interval_millis);
 	previous_millis = millis();
 	state = digitalRead(pin);
     this->pin = pin;
 }
 
-
 void Bounce::write(int new_state)
-       {
-       	this->state = new_state;
-       	digitalWrite(pin,state);
-       }
+{
+    this->state = new_state;
+    digitalWrite(pin,state);
+}
 
 
 void Bounce::interval(unsigned long interval_millis)
 {
-  this->interval_millis = interval_millis;
-  this->rebounce_millis = 0;
+    this->interval_millis = interval_millis;
+    this->rebounce_millis = 0;
 }
 
 void Bounce::rebounce(unsigned long interval)
@@ -59,7 +63,7 @@ int Bounce::update()
 
 unsigned long Bounce::duration()
 {
-  return millis() - previous_millis;
+    return millis() - previous_millis;
 }
 
 
