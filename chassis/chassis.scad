@@ -4,12 +4,16 @@ module servomask() {
     rotate(a=[0,90,0]) translate(pos) cylinder(r=1.75, h=20, $fn=fa/10);
   }
   union() {
-    translate([-20, -20.5, -10.5]) cube([40, 41, 21]);
-    translate([7,-28,-10.5]) cube([5, 56, 21]);
-    hole([5,25,0]);
-    hole([-5,25,0]);
-    hole([5,-25,0]);
-    hole([-5,-25,0]);
+    translate([0,10,0]) union() {
+      translate([-20, -20.5, -10.5]) cube([40, 41, 21]);
+      translate([7,-28,-10.5]) cube([5, 56, 21]);
+      translate([12,-28,-1]) cube([1, 56, 2]);
+      hole([5,25,0]);
+      hole([-5,25,0]);
+      hole([5,-25,0]);
+      hole([-5,-25,0]);
+    }
+    rotate(a=[0,90,0]) translate([0,0,20]) cylinder(r=3, h=7, $fn=fa/10);
   }
 }
 

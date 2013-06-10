@@ -15,7 +15,7 @@ register_hardware_platform(${CMAKE_SOURCE_DIR}/hardware/tiny/hardware/tiny)
 generate_arduino_firmware(arduinoisp
     SKETCH ${ARDUINO_SDK_PATH}/examples/ArduinoISP
     BOARD uno
-    PORT /dev/ttyACM0
+    PORT /dev/ttyACM3
 )
 
 # Rover firmware for the attiny
@@ -25,6 +25,6 @@ generate_arduino_firmware(rover
     # Change the programmer setting if you are not using the arduino as the
     # upload the firmware to the attiny
     PROGRAMMER arduinoisp
-    PORT /dev/ttyACM0
+    PORT /dev/ttyACM3
 )
 
