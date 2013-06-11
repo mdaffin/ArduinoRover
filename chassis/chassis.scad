@@ -37,14 +37,14 @@ module microswitchmask() {
 
 module boardmask() {
   module stand(pos) {
-    translate(pos) rotate(a=[0,0,0]) cylinder(r=1.5, h=20, $fn=fa/10);
+    translate(pos) rotate(a=[0,0,0]) cylinder(r=1.5, h=60, $fn=fa/10);
   }
   union() {
     translate([-36, -23.5, -1.5]) cube([72, 47, 10]);
-    stand([32,19.5,-10]);
-    stand([-32,19.5,-10]);
-    stand([32,-19.5,-10]);
-    stand([-32,-19.9,-10]);
+    stand([32,19.5,-50]);
+    stand([-32,19.5,-50]);
+    stand([32,-19.5,-50]);
+    stand([-32,-19.9,-50]);
   }
 }
 
@@ -77,8 +77,18 @@ module castermask() {
   }
 }
 
-module batterymask() {
+module lipomask() {
   translate([-18,-34,0]) cube([36,68,15]);
+}
+module batterymask() {
+  union() {
+    translate([-28.5,-14,0]) cube([57,28,32]);
+    translate([28.5,-15,3]) cube([8,13,26]);
+  }
+}
+
+module wheelmask() {
+  translate([-5,-50,-30]) cube([50,100,60]);
 }
 
 module base() {
@@ -93,18 +103,60 @@ module base() {
   }
 }
 
-module roundbase() {
-  union() {
-    cylinder(r=100, h=3, $fn=fa);
-    translate([21, 0, 15]) servomask();
-    //translate([21, 0,0]) servomask();
+module roundbase1() {
+  difference() {
+    cylinder(r=80, h=3, $fn=fa);
+    #translate([38, 0, 14]) servomask();
+    #translate([-38, 0, 14]) rotate(a=[0,180,0]) servomask();
+    #translate([0, -45, 5]) boardmask();
+    #translate([0, 15, 3.1]) rotate(a=[0,0,90]) batterymask();
+    #translate([0, 15, 21.1]) rotate(a=[0,90,0]) lipomask();
   }
 }
 
-//batterymask();
-//test();
-//boardmask();
-//servomask();
-//castermask();
+module servo() {
+  difference() {
+    union() {
+      translate([4, 30.5, -13]) cube([3,10,23]);
+      translate([4, -20.5, -13]) cube([3,10,23]);
+    }
+    servomask();
+  }
+}
+
+module battery() {
+  difference() {
+    union() {
+      translate([-5,14,0]) cube([10,2,21]);
+      translate([-5,-17,0]) cube([10,2,21]);
+      translate([-30,-10,0]) cube([2,10,21]);
+      translate([30,-10,0]) cube([2,10,21]);
+    }
+    #rotate(a=[0,0,180]) batterymask();
+  }
+}
+
+module roundbase2() {
+  difference() {
+    union() {
+      cylinder(r=60, h=3, $fn=fa);
+      translate([21, 0, 14]) servo();
+      mirror([1,0,0]) translate([21, 0, 14]) servo();
+      translate([0, -40, 3.1]) rotate(a=[0,0,0]) battery();
+    }
+    translate([0, 12, 30]) rotate(a=[0,0,90]) boardmask();
+    #translate([0, -40, 21.1]) rotate(a=[0,90,90]) lipomask();
+    translate([47, 0, 10]) rotate(a=[0,0,0]) wheelmask();
+    translate([-47, 0, 10]) rotate(a=[0,0,180]) wheelmask();
+    translate([0, -20, 0]) castermask();
+    translate([0, -30, 0]) castermask();
+    translate([0, -40, 0]) castermask();
+    translate([0, 20, 0]) castermask();
+    translate([0, 30, 0]) castermask();
+    translate([0, 40, 0]) castermask();
+  }
+}
+
 //base();
-roundbase();
+//roundbase1();
+roundbase2();
