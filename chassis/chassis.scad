@@ -1,21 +1,5 @@
 fa = 100;
-module servomask() { 
-  module hole(pos) {
-    rotate(a=[0,90,0]) translate(pos) cylinder(r=1.75, h=20, $fn=fa/10);
-  }
-  union() {
-    translate([0,10,0]) union() {
-      translate([-20, -20.5, -10.5]) cube([40, 41, 21]);
-      translate([7,-28,-10.5]) cube([5, 56, 21]);
-      translate([12,-28,-1]) cube([1, 56, 2]);
-      hole([5,25,0]);
-      hole([-5,25,0]);
-      hole([5,-25,0]);
-      hole([-5,-25,0]);
-    }
-    rotate(a=[0,90,0]) translate([0,0,20]) cylinder(r=3, h=7, $fn=fa/10);
-  }
-}
+use <servo.scad>;
 
 module microswitchmask() {
   module hole(pos) {
@@ -108,7 +92,7 @@ module servo() {
       translate([4, 30.5, -13]) cube([3,10,23]);
       translate([4, -20.5, -13]) cube([3,10,23]);
     }
-    servomask();
+    #servomask();
   }
 }
 
