@@ -48,18 +48,6 @@ module boardmask() {
   }
 }
 
-module test() {
-  difference() {
-    translate([-26/2, -28, 0]) cube([26, 63.4, 4]);
-    rotate(a=[0, 90, 0]) translate([-18,0,0]) servomask();
-    translate([0,32,5]) rotate(a=[90, 0, -90]) microswitchmask();
-    translate([8,23,-1]) cube([10,25,6]);
-    mirror([1,0,0]) translate([8,23,-1]) cube([10,25,6]);
-    mirror([0,1,0]) translate([8,23,-1]) cube([10,25,6]);
-    mirror([0,1,0]) mirror([1,0,0]) translate([8,23,-1]) cube([10,25,6]);
-  }
-}
-
 module castermask() {
   module hole(pos) {
     translate(pos) cylinder(r=1, h=10, $fn=fa/7);
@@ -127,12 +115,32 @@ module servo() {
 module battery() {
   difference() {
     union() {
-      translate([-5,14,0]) cube([10,2,21]);
-      translate([-5,-17,0]) cube([10,2,21]);
-      translate([-30,-10,0]) cube([2,10,21]);
-      translate([30,-10,0]) cube([2,10,21]);
+      translate([-25,15,0]) cube([50,2,10]);
+      translate([-5,-17,0]) cube([10,2,10]);
+      translate([-30,-10,0]) cube([2,10,10]);
+      translate([30,-10,0]) cube([2,10,10]);
     }
     #rotate(a=[0,0,180]) batterymask();
+  }
+}
+
+module bumper() {
+  module hole(pos) {
+    translate(pos) rotate(a=[90,0,0]) cylinder(r=1.5, h=20, $fn=fa/7);
+  }
+  module hole2(pos) {
+    translate(pos) rotate(a=[0,0,0]) cylinder(r=1, h=10, $fn=fa/7);
+  }
+  difference() {
+    union() {
+      translate([0,-3,11]) cube([7,5,22], center=true);
+      translate([-3.5,-19.5,20]) cube([15,19,2]);
+    }
+    hole([0,10,5]);
+    hole([0,10,12]);
+    hole2([9,-3,19]);
+    hole2([9,-8,19]);
+    hole2([9,-13,19]);
   }
 }
 
@@ -143,9 +151,13 @@ module roundbase2() {
       translate([21, 0, 14]) servo();
       mirror([1,0,0]) translate([21, 0, 14]) servo();
       translate([0, -40, 3.1]) rotate(a=[0,0,0]) battery();
+      translate([30,50,2]) bumper();
+      mirror([1,0,0]) translate([30,50,2]) bumper();
     }
-    translate([0, 12, 30]) rotate(a=[0,0,90]) boardmask();
-    #translate([0, -40, 21.1]) rotate(a=[0,90,90]) lipomask();
+    #translate([-18,54,6]) rotate(a=[90,0,-90]) microswitchmask();
+    #translate([18,54,6]) rotate(a=[-90,0,-90]) microswitchmask();
+    #translate([0, 12, 30]) rotate(a=[0,0,90]) boardmask();
+    translate([0, -40, 21.1]) rotate(a=[0,90,90]) lipomask();
     translate([47, 0, 10]) rotate(a=[0,0,0]) wheelmask();
     translate([-47, 0, 10]) rotate(a=[0,0,180]) wheelmask();
     translate([0, -20, 0]) castermask();
