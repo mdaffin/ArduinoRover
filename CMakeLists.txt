@@ -8,23 +8,23 @@ project(Rover C CXX)
 
 # Add arduino libraries
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/libraries)
-# Add the arduino-tiny platform
-register_hardware_platform(${CMAKE_SOURCE_DIR}/hardware/tiny/hardware/tiny)
 
-# Firmware for the arduino uno to allow it to program the attiny
+set(ARDUINO_DEFAULT_BOARD uno)
+set(ARDUINO_DEFAULT_PORT /dev/ttyACM0)
+set(ARDUINO_DEFAULT_SERIAL picocom -l @SERIAL_PORT@)
+set(ARDUINO_DEFAULT_PROGRAMMER arduinoisp)
+
+print_programmer_list()
+
+# Firmware for the arduino uno to allow it to program the rover
+set(arduinoisp_PROGRAMMER avrispmkii CACHE STRING "The programmer to use to program the ArduinoISP sketch")
+set(arduinoisp_BOARD uno CACHE STRING "The board id of the board to upload the ArduinoISP sketch to")
 generate_arduino_firmware(arduinoisp
     SKETCH ${ARDUINO_SDK_PATH}/examples/ArduinoISP
-    BOARD uno
-    PORT /dev/ttyACM3
 )
 
-# Rover firmware for the attiny
+# Rover firmware for the rover
 generate_arduino_firmware(rover
     SKETCH ${CMAKE_SOURCE_DIR}/Rover
-    BOARD attiny84at8
-    # Change the programmer setting if you are not using the arduino as the
-    # upload the firmware to the attiny
-    PROGRAMMER arduinoisp
-    PORT /dev/ttyACM3
 )
 
