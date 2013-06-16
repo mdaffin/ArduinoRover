@@ -21,14 +21,14 @@ module microswitchmask() {
 
 module boardmask() {
   module stand(pos) {
-    translate(pos) rotate(a=[0,0,0]) cylinder(r=1.5, h=60, $fn=fa/10);
+    translate(pos) rotate(a=[0,0,0]) cylinder(r=1.5, h=50, $fn=fa/10);
   }
   union() {
     translate([-36, -23.5, -1.5]) cube([72, 47, 10]);
-    stand([32,19.5,-50]);
-    stand([-32,19.5,-50]);
-    stand([32,-19.5,-50]);
-    stand([-32,-19.9,-50]);
+    stand([32,19.5,-40]);
+    stand([-32,19.5,-40]);
+    stand([32,-19.5,-40]);
+    stand([-32,-19.9,-40]);
   }
 }
 
@@ -49,18 +49,8 @@ module castermask() {
   }
 }
 
-module lipomask() {
-  translate([-18,-34,0]) cube([36,68,15]);
-}
-module batterymask() {
-  union() {
-    translate([-28.5,-14,0]) cube([57,28,32]);
-    translate([28.5,-15,3]) cube([8,13,26]);
-  }
-}
-
 module wheelmask() {
-  translate([-5,-50,-30]) cube([50,100,60]);
+  translate([-5,-45,-30]) cube([50,90,60]);
 }
 
 module base() {
@@ -118,38 +108,51 @@ module bumper() {
   difference() {
     union() {
       translate([0,-3,11]) cube([7,5,22], center=true);
-      translate([-3.5,-19.5,20]) cube([15,19,2]);
     }
     hole([0,10,5]);
     hole([0,10,12]);
-    hole2([9,-3,19]);
-    hole2([9,-8,19]);
-    hole2([9,-13,19]);
+  }
+}
+
+module batteryholder() {
+  module lipomask() {
+    translate([-18,-34,0]) cube([36,68,15]);
+  }
+  module batterymask() {
+    union() {
+      translate([-28.5,-14,1]) cube([57,28,32]);
+      translate([28.5,-15,4]) cube([8,13,26]);
+    }
+  }
+  difference() {
+    cube([59,30,8], center=true);
+    batterymask();
   }
 }
 
 module roundbase2() {
   difference() {
     union() {
-      cylinder(r=60, h=3, $fn=fa);
+      cylinder(r=70, h=3, $fn=fa);
       translate([21, 0, 14]) servo();
       mirror([1,0,0]) translate([21, 0, 14]) servo();
-      translate([0, -40, 3.1]) rotate(a=[0,0,0]) battery();
-      translate([30,50,2]) bumper();
-      mirror([1,0,0]) translate([30,50,2]) bumper();
+      //translate([0, -40, 3.1]) rotate(a=[0,0,0]) battery();
+      translate([0,55,4]) batteryholder();
     }
-    #translate([-18,54,6]) rotate(a=[90,0,-90]) microswitchmask();
-    #translate([18,54,6]) rotate(a=[-90,0,-90]) microswitchmask();
-    #translate([0, 12, 30]) rotate(a=[0,0,90]) boardmask();
+    translate([10,41,-3]) cube([12,2, 10]);
+    translate([-22,41,-3]) cube([12,2, 10]);
+    translate([10,54,-3]) cube([12,2, 10]);
+    translate([-22,54,-3]) cube([12,2, 10]);
+    translate([10,67,-3]) cube([12,2, 10]);
+    translate([-22,67,-3]) cube([12,2, 10]);
+    //#translate([-18,54,6]) rotate(a=[90,0,-90]) microswitchmask();
+    //#translate([18,54,6]) rotate(a=[-90,0,-90]) microswitchmask();
+    #translate([0, 6, 30]) rotate(a=[0,0,90]) boardmask();
     translate([0, -40, 21.1]) rotate(a=[0,90,90]) lipomask();
     translate([47, 0, 10]) rotate(a=[0,0,0]) wheelmask();
     translate([-47, 0, 10]) rotate(a=[0,0,180]) wheelmask();
-    translate([0, -20, 0]) castermask();
-    translate([0, -30, 0]) castermask();
-    translate([0, -40, 0]) castermask();
-    translate([0, 20, 0]) castermask();
-    translate([0, 30, 0]) castermask();
-    translate([0, 40, 0]) castermask();
+    translate([0, -30, -2]) castermask();
+    translate([0, 30, -2]) castermask();
   }
 }
 
