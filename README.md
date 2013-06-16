@@ -7,17 +7,27 @@ If you are using the arduino uno or similar as the programmer you must first upl
  cmake ..
  make arduinoisp-upload
 
-Build
-=====
+Burn via ArduinoISP
+===================
 To build and upload the sketch run the following:
 
  mkdir build
  cd build
  cmake ..
- make rover-upload
  make rover-burn
 
-Known issues
-============
-Sometimes uploading seams to up load a blank sketch, if this happens just run `make rover-burn` and that should fix the issue.
+Options
+=======
+To override the default setings add it to the cmake command:
+
+ cmake .. -DARDUINO_DEFAULT_PORT=/dev/ttyUSB0
+
+Common option:
+ 
+ ARDUINO_DEFAULT_PORT        The port of the programmer
+ ARDUINO_DEFAULT_BOARD       The board id of the rover
+ ARDUINO_DEFAULT_SERIAL      The program use for serial communication
+ ARDUINO_DEFAULT_PROGRAMMER  The programmer to use to program the rover
+ arduinoisp_PROGRAMMER       The programmer to use to program the ArduinoISP sketch
+ arduinoisp_BOARD            The board id of the board to upload the ArduinoISP sketch to
 

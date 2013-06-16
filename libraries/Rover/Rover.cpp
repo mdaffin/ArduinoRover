@@ -70,9 +70,9 @@ float Rover::turnFactor() { return _turnFactor; }
 
 void Rover::update() {
     if (_emergency) {
-        LED2(HIGH);
+        turnLED2(HIGH);
         delay(500);
-        LED2(LOW);
+        turnLED2(LOW);
         delay(500);
         return;
     }
