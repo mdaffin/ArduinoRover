@@ -10,9 +10,9 @@ project(Rover C CXX)
 link_directories(${CMAKE_CURRENT_SOURCE_DIR}/libraries)
 
 set(ARDUINO_DEFAULT_BOARD uno)
-set(ARDUINO_DEFAULT_PORT /dev/ttyACM0)
+set(ARDUINO_DEFAULT_PORT /dev/ttyUSB0)
 set(ARDUINO_DEFAULT_SERIAL picocom -l @SERIAL_PORT@)
-set(ARDUINO_DEFAULT_PROGRAMMER arduinoisp)
+#set(ARDUINO_DEFAULT_PROGRAMMER arduinoisp)
 
 print_programmer_list()
 
@@ -28,3 +28,6 @@ generate_arduino_firmware(rover
     SKETCH ${CMAKE_SOURCE_DIR}/Rover
 )
 
+generate_arduino_firmware(rover-motor
+    SKETCH ${CMAKE_SOURCE_DIR}/Rover_motor
+)
