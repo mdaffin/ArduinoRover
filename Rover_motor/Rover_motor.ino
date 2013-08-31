@@ -1,20 +1,24 @@
 #include <Arduino.h>
 #include <Motor.h>
 
-int m1 = 5;
-int m2 = 6;
+int m1 = 6;
+int m2 = 7;
+int m3 = 8;
 int led = 13;
+Motor motor(6,7,8);
 
 void setup()
 {
-  pinMode(m1, OUTPUT);
-  pinMode(m2, OUTPUT);
+  motor.init();
   pinMode(led, OUTPUT);
 }
 
+int speed = 0;
+
 void loop()
 {
-  digitalWrite(led, HIGH);
-  digitalWrite(m1, LOW);
-  digitalWrite(m2, HIGH);
+  digitalWrite(led, LOW);
+  motor.setSpeed(speed++);
+  if (speed >= 255) speed = -255;
+  delay(100);
 }
